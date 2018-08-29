@@ -1,27 +1,8 @@
-# app
+# firestore設定方法
+1.firebaesでpj作成する。  
+2.Authenticationにある「ウェブ設定」ボタンを押下し、config情報を取得する。  
+3.本リポジトリのsrc/firebase/config.jsを上記で取得したconfig情報で設定する。  
 
-> A Vue.js project
+# 現状、本リポジトリでできること
+npm run devで起動させて画面をブラウザで表示されると、指定のfirestoreへ情報を書き込む。  
 
-## Build Setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run all tests
-npm test
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
