@@ -1,31 +1,30 @@
 <template>
   <div class="hello">
     firebase検証
+    <input type="text" v-model="input" />
+    <button @click="insert">データを作成</button>
+    <div v-for="(v, i) in chat" :key="i">
+      {{v}}
+    </div>
   </div>
 </template>
 
 <script>
-import firebase from '@/firebase'
 export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      chat: this.$store.state.firebase.chat,
+      input: ''
     }
   },
   created: function () {
-    this.$store.dispatch('firebase/insertData').then(data => {
-      firebase.collection('chatroom').doc('roomB').collection('message').add({
-        message: 'componentから',
-        timestamp: Date.now()
-      }).then((docRef) => {
-      }).catch((error) => {
-        console.error('Error adding document: ', error)
-      })
-      return new Promise(resolve => {
-        resolve('aaaa')
-      })
-    })
+    this.$store.dispatch('firebase/fetch')
+  },
+  methods: {
+    insert: function () {
+      this.$store.dispatch('firebase/insertData', {text: this.input})
+    }
   }
 }
 </script>

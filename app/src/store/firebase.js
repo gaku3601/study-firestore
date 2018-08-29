@@ -1,10 +1,13 @@
 import firebase from '@/firebase'
 export default{
   namespaced: true,
+  state: {
+    chat: []
+  },
   actions: {
-    insertData ({ commit }) {
+    insertData ({ commit }, { text }) {
       firebase.collection('chatroom').doc('roomB').collection('message').add({
-        message: 'stateから',
+        message: text,
         timestamp: Date.now()
       }).then((docRef) => {
       }).catch((error) => {
@@ -13,6 +16,23 @@ export default{
       return new Promise(resolve => {
         resolve('aaaa')
       })
+    },
+    fetch ({ commit, state }) {
+      firebase.collection('chatroom').doc('roomB').collection('message').orderBy('timestamp', 'asc').onSnapshot(querySnapshot => {
+        querySnapshot.docChanges().forEach(change => {
+          const payload = {
+            id: change.doc.id,
+            message: change.doc.data().message,
+            timestamp: change.doc.data().timestamp
+          }
+          commit('setChat', payload)
+        })
+      })
+    }
+  },
+  mutations: {
+    setChat (state, payload) {
+      state.chat.push(payload)
     }
   }
 }
