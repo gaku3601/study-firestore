@@ -1,6 +1,11 @@
 <template>
   <div class="hello">
     firebase検証
+    <input type="text" v-model="input" />
+    <button @click="doSend">書き込み</button>
+    <div v-for="(v, i) in chat" :key="i">
+      {{v}}
+    </div>
   </div>
 </template>
 
@@ -9,17 +14,33 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      input: '',
+      chat: []
     }
   },
   created: function () {
-    this.$firebase.collection('chatroom').doc('roomB').collection('message').add({
-      message: 'abababaiiaaaa',
-      timestamp: Date.now()
-    }).then((docRef) => {
-    }).catch((error) => {
-      console.error('Error adding document: ', error)
+    this.$firebase.collection('chatroom').doc('roomB').collection('message').orderBy('timestamp', 'asc').onSnapshot(querySnapshot => {
+      querySnapshot.docChanges().forEach(change => {
+        const payload = {
+          id: change.doc.id,
+          message: change.doc.data().message,
+          timestamp: change.doc.data().timestamp
+        }
+        this.chat.push(payload)
+      })
     })
+  },
+  methods: {
+    doSend: function () {
+      this.$firebase.collection('chatroom').doc('roomB').collection('message').add({
+        message: this.input,
+        timestamp: Date.now()
+      }).then((docRef) => {
+      }).catch((error) => {
+        console.error('Error adding document: ', error)
+      })
+    }
   }
 }
 </script>
