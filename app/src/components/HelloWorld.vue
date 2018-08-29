@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import firebase from '@/firebase'
 export default {
   name: 'HelloWorld',
   data () {
@@ -14,17 +13,15 @@ export default {
     }
   },
   created: function () {
-    this.$store.dispatch('firebase/insertData').then(data => {
-      firebase.collection('chatroom').doc('roomB').collection('message').add({
-        message: 'componentから',
-        timestamp: Date.now()
-      }).then((docRef) => {
-      }).catch((error) => {
-        console.error('Error adding document: ', error)
-      })
-      return new Promise(resolve => {
-        resolve('aaaa')
-      })
+    this.$store.dispatch('firebase/testa').then(data => {
+      console.log(data)
+    })
+    this.$firebase.collection('chatroom').doc('roomB').collection('message').add({
+      message: 'abababaiiaaaa',
+      timestamp: Date.now()
+    }).then((docRef) => {
+    }).catch((error) => {
+      console.error('Error adding document: ', error)
     })
   }
 }
