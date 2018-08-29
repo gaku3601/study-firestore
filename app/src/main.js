@@ -3,7 +3,6 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import firebase from './firebase'
 import store from './store'
 
 Vue.config.productionTip = false
@@ -12,7 +11,6 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   store,
-  firebase,
   router,
   components: { App },
   template: '<App/>'
