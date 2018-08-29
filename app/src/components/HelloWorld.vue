@@ -13,9 +13,6 @@ export default {
     }
   },
   created: function () {
-    this.$store.dispatch('firebase/testa').then(data => {
-      console.log(data)
-    })
     this.$firebase.collection('chatroom').doc('roomB').collection('message').add({
       message: 'abababaiiaaaa',
       timestamp: Date.now()
